@@ -9,7 +9,10 @@ router.get("/", controller.get)
 //router.get("/", function (req, res) {
   //  res.status(200).send(alunas)
 //})
+router.get("/nasceuSp", controller.getSp)
 router.get("/: id", controller.getById)
 router.get("/:id/books", controller.getBooks)
+
+
 
 module.exports = router

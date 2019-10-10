@@ -6,13 +6,29 @@ exports.get = (req, res) => {
 }
 exports.getById = (req, res) => {
     const id = req.params.id
-    console.log(id)
+    if (id > 17 || id <= 0) {
+        res.redirect(301, "https://en.wikipedia.org/wiki/Man-in-the-middle_attack")//qualquer site
+    }
     res.status(200).send(alunas.find(aluna => aluna.id == id))
 }
+
 exports.getBooks = (req, res) => {
     const id = req.params.id
     const aluna = alunas.find(aluna => aluna.id == id)
-    console.log(aluna)
-    res.status(200).send('bateu')
-
+    if (!aluna) {
+        res.send("Não encontrei essa aluna!")
+    }
+    const livrosAluna = aluna.livros
+    const livrosLidos = livrosAluna.filter(livro => livro.leu == "true")
+    const tituloLivros = livrosAluna.reduce(livro => livro.titulo)
+    res.status(200).send(livrosLidos)
 }
+
+exports.getSp = (req, res) => {
+    const Sp = alunas.filter(nasceuSp => nasceuSp.nasceuEmSp == "true")
+    const nomesSp = []
+    Sp.map(aluna => nomesSp.push(aluna.nome))
+    res.status(200).send(nomesSp)
+}
+
+
